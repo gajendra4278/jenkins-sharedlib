@@ -1,4 +1,4 @@
-Blue Yonder CI shared steps library
+MYCompany CI shared steps library
 ===================================
 
 
