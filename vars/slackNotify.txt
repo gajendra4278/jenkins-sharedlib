@@ -1,0 +1,51 @@
+<b>slackNotify</b>
+<p>
+SlackNotify is a helper around slacksend. Include it at the end of your Jenkinsfile and it will send notifications to the configured slack channel.
+
+There are a few options that help to customize the messages sent by this notifier:
+</p>
+
+<dl>
+    <dt><b>slackNotifyChannel</b></dt>
+    <dd>Which channel should be notified. <i>(default: @slackbot)</i></dd>
+    <dt><b>slackNotifyBranches</b></dt>
+    <dd>This list defines for which channels there should be a notification. An empty list will trigger on all branches.<i>(default: ["master"])</i></dd>
+    <dt><b>slackNotifyAllOnSuccess</b></dt>
+    <dd>If <tt>true</tt> all builds trigger notifications, else subsequent successful runs will not trigger notifications. <i>(default: false)</i></dd>
+    <dt><b>slackNotifyIncludeChanges</b></dt>
+    <dd>If <tt>true</tt> changes that were included in the current build are included in the slack notification <i>(default: false)</i></dd>
+</dl>
+<hr/>
+<b>Example</b>
+<br/>
+<pre>
+<code>
+timestamps {  <br/>
+    milestone()  // track build order <br/>
+
+    node("debian_8") {
+        try {
+            step([$class: 'StashNotifier'])
+            // ..... Build your stuff
+
+            currentBuild.result = 'SUCCESS' // You need to set the build status
+        } catch(e) {
+            currentBuild.result = 'FAILED'
+            throw e
+        } finally {
+            slackNotify{slackNotifyChannel='#mychannel-dev'}
+            step([$class: 'StashNotifier'])
+        }
+    }
+}
+
+// More complex configuration:
+// No comma between parameters and use curly brackets<br/>
+slackNotify{<br/>
+&emsp;slackNotifyChannel='#mychannel-dev'   <br/>
+&emsp;slackNotifyBranches=["master","nightly"] <br/>
+&emsp;slackNotifyAllOnSuccess=true
+&emsp;slackNotifyIncludeChanges=true} <br/>
+
+</code>
+</pre>

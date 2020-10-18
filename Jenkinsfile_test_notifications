@@ -1,0 +1,27 @@
+timestamps {
+   try{
+       milestone()
+       node(){
+
+
+        }
+        slackNotify{slackNotifyChannel="#byci-dev"
+                    slackNotifyAllChangesOnSuccess=true
+                    slackNotifyBranches=[]
+                    slackNotifyIncludeChanges=false}
+
+        currentBuild.result = 'SUCCESS'
+    }finally{
+        slackNotify{slackNotifyChannel="#byci-dev"
+                    slackNotifyAllChangesOnSuccess=true
+                    slackNotifyBranches=[]
+                    slackNotifyIncludeChanges=true}
+
+        currentBuild.result = 'UNSTABLE'
+        slackNotify{slackNotifyChannel="#byci-dev"
+                    slackNotifyAllChangesOnSuccess=true
+                    slackNotifyBranches=[]
+                    slackNotifyIncludeChanges=true}
+
+    }
+}
