@@ -27,6 +27,8 @@ def notifySlack(slackChannel, notifyBranches, notifyAllChangesOnSuccess, include
 
 def call(body) {
     // evaluate the body block, and collect configuration into the object
+    echo "${body}"
+    echo body
     def config = [slackNotifyChannel: "@slackbot",
                   slackNotifyBranches: ["master"],
                   slackNotifyAllChangesOnSuccess: false,
