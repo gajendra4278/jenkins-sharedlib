@@ -17,11 +17,15 @@ def notifyTeam(msteamhook, notifyBranches, notifyAllChangesOnSuccess, includeCha
       if(currentBuild.result == 'SUCCESS'){
           echo currentBuild.result
           def previousBuild = currentBuild.previousBuild
+          
           if(notifyAllChangesOnSuccess || (previousBuild != null && previousBuild.result != 'SUCCESS') ) {
+	     echo ("Failed")
              office365ConnectorSend message: "${label} - ${build_information}", webhookUrl: msteamhook, color: color
           }
+          echo ("Pass1")
           previuosBuild = null
       }else{
+	     echo ("Pass2")
              office365ConnectorSend message: "${label} - ${build_information}", webhookUrl: msteamhook, color: color
       }
   }
