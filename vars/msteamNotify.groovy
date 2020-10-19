@@ -1,7 +1,7 @@
 import com.mycompany.TestSummary
 
 
-def notifySlack(slackChannel, notifyBranches, notifyAllChangesOnSuccess, includeChanges){
+def notifyTeam(msteamhook, notifyBranches, notifyAllChangesOnSuccess, includeChanges){
 
   notifyBranches = notifyBranches ? notifyBranches: env.BRANCH_NAME
   if(slackChannel && (env.BRANCH_NAME in notifyBranches || !env.BRANCH_NAME )){
@@ -16,11 +16,11 @@ def notifySlack(slackChannel, notifyBranches, notifyAllChangesOnSuccess, include
       if(currentBuild.result == 'SUCCESS'){
           def previousBuild = currentBuild.previousBuild
           if(notifyAllChangesOnSuccess || (previousBuild != null && previousBuild.result != 'SUCCESS') ) {
-             slackSend channel: slackChannel, color: color, message: "${label} - ${build_information}"
+             office365ConnectorSend message: "${label} - ${build_information}", webhookUrl: msteamhook, color: color
           }
           previuosBuild = null
       }else{
-             slackSend channel: slackChannel, color: color, message: "${label} - ${build_information}"
+             office365ConnectorSend message: "${label} - ${build_information}", webhookUrl: msteamhook, color: color
       }
   }
 }
@@ -37,10 +37,10 @@ def call(body) {
 
     echo currentBuild.result
 
-    /*notifyTeam(config.msteamNotifyWebhook,
+    notifyTeam(config.msteamNotifyWebhook,
                 config.msteamNotifyBranches,
                 config.msteamNotifyAllChangesOnSuccess,
                 config.msteamNotifyIncludeChanges)
-    */
+    
   }
 
