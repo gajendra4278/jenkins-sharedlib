@@ -13,10 +13,10 @@ def notifyTeam(msteamhook, notifyBranches, notifyAllChangesOnSuccess, includeCha
       echo color
 
        // Colors are good, warning, danger
-      echo (currentBuild.result == 'SUCCESS')
+      //echo (currentBuild.result == 'SUCCESS')
       if(currentBuild.result == 'SUCCESS'){
-          def previousBuild = currentBuild.previousBuild
           echo currentBuild.result
+          def previousBuild = currentBuild.previousBuild
           if(notifyAllChangesOnSuccess || (previousBuild != null && previousBuild.result != 'SUCCESS') ) {
              office365ConnectorSend message: "${label} - ${build_information}", webhookUrl: msteamhook, color: color
           }
