@@ -4,7 +4,7 @@ import com.mycompany.TestSummary
 def notifyTeam(msteamhook, notifyBranches, notifyAllChangesOnSuccess, includeChanges){
 
   notifyBranches = notifyBranches ? notifyBranches: env.BRANCH_NAME
-  if(slackChannel && (env.BRANCH_NAME in notifyBranches || !env.BRANCH_NAME )){
+  if(msteamhook && (env.BRANCH_NAME in notifyBranches || !env.BRANCH_NAME )){
       summary = new TestSummary(script:this)
       build_information = summary.getBuildInformation(includeChanges)
       color = summary.getColor()
