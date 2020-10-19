@@ -18,7 +18,7 @@ class TestSummary implements Serializable{
                    'SUCCESS' : [ 'color': "good",    "label": "Success"]]
 
     String getTestSummary2() {
-        def testStatus = "no tests published"
+        def testStatus = "\n no tests published\n"
 
         AbstractTestResultAction testResultAction = script.currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
       
@@ -33,7 +33,7 @@ class TestSummary implements Serializable{
     }
   
     String getCoverageSummary() {
-      def coverageStatus = "no coverage published"
+      def coverageStatus = "no coverage published\n"
       def coverageAction = script.currentBuild.rawBuild.getAction(hudson.plugins.cobertura.CoberturaBuildAction.class)
       
       if (coverageAction != null ){
